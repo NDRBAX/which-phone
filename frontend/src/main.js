@@ -1,15 +1,12 @@
-import Vue from "vue";
-import Vuesax from "vuesax";
-
+import { createApp } from "vue";
 import App from "./App.vue";
 import router from "./router";
 
 // import "./assets/main.css";
-import "vuesax/dist/vuesax.css"; //Vuesax styles
+import "./assets/tailwind.css";
 
-new Vue({
-  router,
-  render: (h) => h(App),
-}).$mount("#app");
+const app = createApp(App);
 
-Vue.use(Vuesax, {});
+app.use(router);
+
+app.mount("#app");
