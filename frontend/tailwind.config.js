@@ -28,7 +28,17 @@ module.exports = {
       purple: "#7e5bef",
       pink: "#ff49db",
       orange: "#ff7849",
-      green: "#0be881",
+      green: {
+        100: "#dcfce7",
+        200: "#bbf7d0",
+        300: "#86efac",
+        400: "#4ade80",
+        500: "#22c55e",
+        600: "#0be881",
+        700: "#15803d",
+        800: "#166534",
+        900: "#05c46b",
+      },
       yellow: "#ffc82c",
       "gray-dark": "#273444",
       gray: {
@@ -60,5 +70,5 @@ module.exports = {
     },
   },
   variants: {},
-  plugins: [],
+  plugins: [require("@tailwindcss/forms")],
 };
