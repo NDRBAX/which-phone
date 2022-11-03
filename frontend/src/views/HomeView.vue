@@ -1,9 +1,11 @@
-<script setup lang="ts">
-import TheWelcome from "@/components/TheWelcome.vue";
-</script>
-
 <template>
-  <main>
-    <TheWelcome />
-  </main>
+  <HeroSection />
+  <ServiceStats />
+  <GuideSteps />
 </template>
+
+<script setup>
+import HeroSection from "../components/HeroSection.vue";
+import ServiceStats from "../components/ServiceStats.vue";
+import GuideSteps from "../components/GuidSteps.vue";
+</script>
