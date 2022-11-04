@@ -1,7 +1,7 @@
 <template>
   <div class="relative bg-white">
     <div class="mx-auto max-w-7xl">
-      <div class="relative z-10 bg-white pb-2">
+      <div class="relative z-10 bg-white pb-5">
         <Popover>
           <div class="relative px-4 pt-6 sm:px-6 lg:px-8">
             <nav
@@ -115,23 +115,16 @@
 </template>
 
 <script setup>
-import {
-  Popover,
-  PopoverButton,
-  PopoverPanel,
-  // DisclosureButton,
-} from "@headlessui/vue";
+import { Popover, PopoverButton, PopoverPanel } from "@headlessui/vue";
 import { Bars3Icon, XMarkIcon } from "@heroicons/vue/24/outline";
 import { RouterLink, RouterView } from "vue-router";
-const navigation = [
-  { name: "Guid", link: "/", current: true },
-  { name: "Pricing", link: "/pricing", current: false },
-  { name: "About", link: "/about", current: false },
-];
-</script>
+import { inject } from "vue";
 
-<script>
-export default {
-  name: "NavBar",
-};
+const navigation = inject("dataENG").navigation;
+
+// const navigation = [
+//   { name: "Guid", link: "/", current: true },
+//   { name: "Pricing", link: "/pricing", current: false },
+//   { name: "About", link: "/about", current: false },
+// ];
 </script>
