@@ -1,9 +1,9 @@
 <template>
   <HeroSection />
   <ServiceStats />
-  <CategoriesSection />
   <ContentSection />
   <GuideSteps />
+  <CategoriesSection />
 </template>
 
 <script setup>
