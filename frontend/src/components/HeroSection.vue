@@ -44,7 +44,9 @@
         </main>
       </div>
     </div>
-    <div class="lg:absolute lg:inset-y-0 lg:right-0 lg:w-1/3 cover-header-1">
+    <div
+      class="lg:absolute lg:inset-y-0 lg:right-0 lg:w-1/3 cover-header-1 hidden lg:block"
+    >
       <svg
         class="absolute inset-y-0 left-0 hidden h-full w-5z-10 0 translate-x-1/10 transform text-white lg:block"
         fill="currentColor"
@@ -91,7 +93,6 @@ import { inject } from "vue";
 gsap.registerPlugin(ScrollTrigger);
 export default {
   name: "HeroSection",
-
   mounted: function () {
     this.scrollAnimation();
   },
@@ -103,7 +104,6 @@ export default {
           start: "top 70%",
           end: "bottom 10%",
           scrub: 3,
-
           onEnter: () => {
             gsap.to(".box-header", {
               duration: 2,
@@ -153,7 +153,6 @@ export default {
               opacity: 0,
             });
           },
-
           onEnterBack: () => {
             gsap.to(".box-header", {
               duration: 2,
@@ -191,7 +190,6 @@ export default {
           start: "top 70%",
           end: "bottom 0%",
           scrub: 3,
-
           onEnter: () => {
             gsap.to(".box-header", {
               duration: 2,
@@ -236,7 +234,6 @@ export default {
               opacity: 0,
             });
           },
-
           onEnterBack: () => {
             gsap.to(".box-header", {
               duration: 2,
