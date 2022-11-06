@@ -1,4 +1,5 @@
 import { createApp } from "vue";
+import { createPinia } from "pinia";
 import App from "./App.vue";
 import router from "./router";
 import dataENG from "../dataENG";
@@ -23,10 +24,11 @@ import {
 library.add(faShop, faUsers, faMobileScreenButton, faCommentsDollar);
 
 const app = createApp(App);
-app.config.globalProperties.$dataENG = dataENG;
 
+app.config.globalProperties.$dataENG = dataENG;
 app.provide("dataENG", dataENG);
 
+app.use(createPinia());
 app.use(router);
 app.component("font-awesome-icon", FontAwesomeIcon);
 
