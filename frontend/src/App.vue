@@ -2,6 +2,7 @@
   <header>
     <NavBar />
   </header>
+  <RouterView />
   <footer>
     <FooterOne />
   </footer>
@@ -10,8 +11,8 @@
 <script>
 import NavBar from "./components/NavBar.vue";
 import FooterOne from "./components/FooterOne.vue";
-
+import { RouterView } from "vue-router";
 export default {
-  components: { NavBar, FooterOne },
+  components: { NavBar, FooterOne, RouterView },
 };
 </script>
