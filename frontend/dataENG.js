@@ -29,14 +29,14 @@ const stats = [
       "It’s something that’s many of the wisest people in history have kept in mind.",
   },
   {
-    title: "Happy Consummers",
+    title: "Consummers",
     icon: "fa-solid fa-users",
     count: "1.3K",
     description:
       "For many men, the acquisition of wealth does not end their troubles, it only changes them. ",
   },
   {
-    title: "Smartphone Models",
+    title: "Models",
     icon: "fa-solid fa-mobile-screen-button",
     count: "2.5K",
     description:
