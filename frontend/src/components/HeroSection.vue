@@ -2,12 +2,12 @@
   <div class="relative overflow-hidden bg-white z-0">
     <div class="mx-auto max-w-7xl">
       <div
-        class="relative z-10 pb-8 sm:pb-16 md:pb-20 lg:w-full lg:max-w-2xl lg:pb-28 xl:pb-32"
+        class="relative z-10 pb-0 sm:pb-2 md:pb-10 lg:w-full lg:max-w-2xl lg:pb-28 xl:pb-32"
       >
-        <main
+        <div
           class="mx-auto pt-10 max-w-7xl px-4 sm:pt-12 sm:px-6 md:pt-16 lg:pt-20 lg:px-8 xl:pt-28"
         >
-          <div class="sm:text-center lg:text-left box-header">
+          <div class="box-header sm:text-center lg:text-left z-0">
             <h1
               class="title-header text-4xl font-bold tracking-tight text-gray-900 sm:text-5xl md:text-6xl"
             >
@@ -41,14 +41,14 @@
               </div>
             </div>
           </div>
-        </main>
+        </div>
       </div>
     </div>
     <div
       class="lg:absolute lg:inset-y-0 lg:right-0 lg:w-1/3 cover-header-1 hidden lg:block"
     >
       <svg
-        class="absolute inset-y-0 left-0 hidden h-full w-5z-10 0 translate-x-1/10 transform text-white lg:block"
+        class="absolute inset-y-0 left-0 hidden h-full w-50 translate-x-1/10 transform text-white lg:block"
         fill="currentColor"
         viewBox="0 0 100 100"
         preserveAspectRatio="none"
@@ -88,177 +88,159 @@
 <script>
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { inject } from "vue";
+import { inject, onMounted } from "vue";
 
 gsap.registerPlugin(ScrollTrigger);
 export default {
   name: "HeroSection",
-  mounted: function () {
-    this.scrollAnimation();
-  },
-  methods: {
-    scrollAnimation() {
-      if (window.innerWidth > 1024) {
-        ScrollTrigger.create({
-          trigger: ".box-header",
-          start: "top 70%",
-          end: "bottom 10%",
-          scrub: 3,
-          onEnter: () => {
-            gsap.to(".box-header", {
-              duration: 2,
-              x: 200,
-              opacity: 1,
-            });
-            gsap.to(".cover-header-1", {
-              duration: 0.5,
-              x: -10,
-              opacity: 1,
-            });
-            gsap.to(".cover-header-2", {
-              duration: 0.5,
-              x: 10,
-              opacity: 1,
-            });
-            gsap.to(".title-header", {
-              duration: 0.5,
-              x: -80,
-              opacity: 1,
-            });
-            gsap.to(".paragraph-header", {
-              duration: 0.5,
-              x: -50,
-              opacity: 1,
-            });
-          },
-          onLeave: () => {
-            gsap.to(".box-header", {
-              duration: 2,
-              x: -200,
-              opacity: 0,
-            });
-            gsap.to(".cover-header-1", {
-              duration: 0.5,
-              x: 10,
-              opacity: 0,
-            });
-            gsap.to(".cover-header-2", {
-              duration: 0.5,
-              x: -10,
-              opacity: 0,
-            });
-            gsap.to(".title-header", {
-              duration: 0.5,
-              x: 80,
-              opacity: 0,
-            });
-          },
-          onEnterBack: () => {
-            gsap.to(".box-header", {
-              duration: 2,
-              x: 200,
-              opacity: 1,
-            });
-            gsap.to(".cover-header-1", {
-              duration: 0.5,
-              x: -10,
-              opacity: 1,
-            });
-            gsap.to(".cover-header-2", {
-              duration: 0.5,
-              x: 10,
-              opacity: 1,
-            });
-            gsap.to(".title-header", {
-              duration: 0.5,
-              x: -80,
-              opacity: 1,
-            });
-            gsap.to(".paragraph-header", {
-              duration: 0.5,
-              x: -50,
-              opacity: 1,
-            });
-          },
-          onLeaveBack: () => console.log("leave back"),
-          // markers: true,
-          // id: "hero",
-        });
-      } else {
-        ScrollTrigger.create({
-          trigger: ".box-header",
-          start: "top 70%",
-          end: "bottom 0%",
-          scrub: 3,
-          onEnter: () => {
-            gsap.to(".box-header", {
-              duration: 2,
-              x: 0,
-              opacity: 1,
-            });
-            gsap.to(".cover-header-1", {
-              duration: 0.5,
-              x: 0,
-              opacity: 1,
-            });
-            gsap.to(".cover-header-2", {
-              duration: 0.5,
-              x: 0,
-              opacity: 1,
-            });
-            gsap.to(".title-header", {
-              duration: 0.5,
-              x: 0,
-              opacity: 1,
-            });
-            gsap.to(".paragraph-header", {
-              duration: 0.5,
-              x: 0,
-              opacity: 1,
-            });
-          },
-          onLeave: () => {
-            gsap.to(".box-header", {
-              duration: 2,
-              x: 0,
-              opacity: 0,
-            });
-            gsap.to(".cover-header-1", {
-              duration: 0.5,
-              x: 0,
-              opacity: 0,
-            });
-            gsap.to(".cover-header-2", {
-              duration: 0.5,
-              x: 0,
-              opacity: 0,
-            });
-          },
-          onEnterBack: () => {
-            gsap.to(".box-header", {
-              duration: 2,
-              x: 0,
-              opacity: 1,
-            });
-            gsap.to(".cover-header-1", {
-              duration: 0.5,
-              x: 0,
-              opacity: 1,
-            });
-            gsap.to(".cover-header-2", {
-              duration: 0.5,
-              x: 0,
-              opacity: 1,
-            });
-          },
-          onLeaveBack: () => console.log("leave back"),
-          // markers: true,
-        });
-      }
-    },
-  },
+
   setup() {
     const hero = inject("dataENG").hero;
+
+    onMounted(() => {
+      let responsive = gsap.matchMedia();
+      let desktopBreakPoint = 1024;
+      let mobileBreakPoint = 640;
+
+      responsive.add(
+        {
+          isMobile: `screen and (max-width: ${mobileBreakPoint}px)`,
+          isTablet: `(max-width: ${desktopBreakPoint - 1}px) and (min-width: ${
+            mobileBreakPoint + 1
+          }px) and (prefers-reduced-motion: no-preference)`,
+          isDesktop: `(min-width: ${desktopBreakPoint}px) and (prefers-reduced-motion: no-preference)`,
+        },
+        (context) => {
+          let { isDesktop, isTablet, isMobile } = context.conditions;
+          ScrollTrigger.create({
+            trigger: ".box-header",
+            start: "top 70%",
+            end: "bottom 10%",
+
+            toggleActions: "restart none none restart", // play, pause, resume, reset, restart, complete, reverse,none [start - pass the end point - pass the start point - end]
+
+            scrub: 3,
+
+            onEnter: () => {
+              gsap.to(".box-header", {
+                duration: 2,
+                x: isDesktop ? 250 : 0,
+                y: isMobile || isTablet ? -25 : 0,
+                opacity: 1,
+              });
+              gsap.to(".cover-header-1", {
+                duration: 2,
+                x: isDesktop ? -5 : 0,
+                opacity: 1,
+              });
+              gsap.to(".cover-header-2", {
+                duration: 2,
+                x: isDesktop ? 5 : 0,
+                opacity: 1,
+              });
+              gsap.to(".title-header", {
+                duration: 2,
+                x: isDesktop ? -80 : 0,
+                opacity: 1,
+              });
+              gsap.to(".paragraph-header", {
+                duration: 2,
+                x: isDesktop ? -50 : 0,
+                opacity: 1,
+              });
+            },
+            onLeave: () => {
+              gsap.to(".box-header", {
+                duration: 0.5,
+                x: isDesktop ? -150 : 0,
+                y: isMobile || isTablet ? 25 : 0,
+                opacity: 0,
+              });
+              gsap.to(".cover-header-1", {
+                duration: 0.5,
+                x: isDesktop ? 5 : 0,
+                opacity: 0,
+              });
+              gsap.to(".cover-header-2", {
+                duration: 0.5,
+                x: isDesktop ? -5 : 0,
+                opacity: 0,
+              });
+              gsap.to(".title-header", {
+                duration: 0.5,
+                x: isDesktop ? 80 : 0,
+                opacity: 0,
+              });
+              gsap.to(".paragraph-header", {
+                duration: 0.5,
+                x: isDesktop ? 50 : 0,
+                opacity: 0,
+              });
+            },
+            onEnterBack: () => {
+              gsap.to(".box-header", {
+                duration: 2,
+                x: isDesktop ? 250 : 0,
+                y: isMobile || isTablet ? -25 : 0,
+                opacity: 1,
+              });
+              gsap.to(".cover-header-1", {
+                duration: 2,
+                x: isDesktop ? -5 : 0,
+                opacity: 1,
+              });
+              gsap.to(".cover-header-2", {
+                duration: 2,
+                x: isDesktop ? 5 : 0,
+                opacity: 1,
+              });
+              gsap.to(".title-header", {
+                duration: 2,
+                x: isDesktop ? -80 : 0,
+                opacity: 1,
+              });
+              gsap.to(".paragraph-header", {
+                duration: 2,
+                x: isDesktop ? -50 : 0,
+                opacity: 1,
+              });
+            },
+            onLeaveBack: () => {
+              gsap.to(".box-header", {
+                duration: 2,
+                x: isDesktop ? -150 : 0,
+                y: isMobile || isTablet ? 25 : 0,
+                opacity: 0,
+              });
+              gsap.to(".cover-header-1", {
+                duration: 2,
+                x: isDesktop ? 5 : 0,
+                opacity: 0,
+              });
+              gsap.to(".cover-header-2", {
+                duration: 2,
+                x: isDesktop ? -5 : 0,
+                opacity: 0,
+              });
+              gsap.to(".title-header", {
+                duration: 2,
+                x: isDesktop ? 80 : 0,
+                opacity: 0,
+              });
+              gsap.to(".paragraph-header", {
+                duration: 2,
+                x: isDesktop ? 50 : 0,
+                opacity: 0,
+              });
+            },
+          });
+        }
+      );
+      return () => {
+        responsive.remove();
+      };
+    });
+
     return {
       hero,
     };
