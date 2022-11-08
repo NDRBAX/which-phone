@@ -16,6 +16,7 @@ module.exports = {
   // },
   theme: {
     screens: {
+      xs: "320px",
       sm: "640px",
       md: "768px",
       lg: "1024px",
@@ -29,6 +30,7 @@ module.exports = {
       pink: "#ff49db",
       orange: "#ff7849",
       green: {
+        50: "#f0fdf4",
         100: "#dcfce7",
         200: "#bbf7d0",
         300: "#86efac",
