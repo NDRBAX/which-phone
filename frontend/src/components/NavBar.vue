@@ -111,13 +111,12 @@
       </div>
     </div>
   </div>
-  <RouterView />
 </template>
 
 <script setup>
 import { Popover, PopoverButton, PopoverPanel } from "@headlessui/vue";
 import { Bars3Icon, XMarkIcon } from "@heroicons/vue/24/outline";
-import { RouterLink, RouterView } from "vue-router";
+import { RouterLink } from "vue-router";
 import { inject } from "vue";
 
 const navigation = inject("dataENG").navigation;
