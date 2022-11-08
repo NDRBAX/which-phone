@@ -1,5 +1,43 @@
 <template>
   <div class="relative overflow-hidden bg-white z-0">
+    <div
+      class="lg:absolute lg:inset-y-0 lg:right-0 lg:w-1/3 cover-header-1 hidden lg:block"
+    >
+      <svg
+        class="absolute left-[-10px] hidden h-full w-50 translate-x-1/10 transform text-white lg:block"
+        fill="currentColor"
+        viewBox="0 0 100 100"
+        preserveAspectRatio="none"
+        aria-hidden="true"
+      >
+        <polygon points="10,-100 24,0 6,100 -30,100" />
+      </svg>
+
+      <img
+        class="h-56 w-full object-cover object-right sm:h-72 md:h-96 lg:h-full lg:w-full"
+        :src="hero.coverImage"
+        alt=""
+      />
+    </div>
+
+    <div
+      class="lg:absolute lg:inset-y-0 lg:left-0 lg:w-1/3 cover-header-2 hidden lg:block"
+    >
+      <svg
+        class="absolute right-[-10px] hidden h-full w-50 translate-x-1/10 transform text-white lg:block"
+        fill="currentColor"
+        viewBox="0 0 100 100"
+        preserveAspectRatio="none"
+        aria-hidden="true"
+      >
+        <polygon points="50 ,-10 100,0 100,100 30,100" />
+      </svg>
+      <img
+        class="h-56 w-full object-cover object-left sm:h-72 md:h-96 lg:h-full lg:w-full"
+        :src="hero.coverImage"
+        alt=""
+      />
+    </div>
     <div class="mx-auto max-w-7xl">
       <div
         class="relative z-10 pb-0 sm:pb-2 md:pb-10 lg:w-full lg:max-w-2xl lg:pb-28 xl:pb-32"
@@ -44,44 +82,6 @@
         </div>
       </div>
     </div>
-    <div
-      class="lg:absolute lg:inset-y-0 lg:right-0 lg:w-1/3 cover-header-1 hidden lg:block"
-    >
-      <svg
-        class="absolute inset-y-0 left-0 hidden h-full w-50 translate-x-1/10 transform text-white lg:block"
-        fill="currentColor"
-        viewBox="0 0 100 100"
-        preserveAspectRatio="none"
-        aria-hidden="true"
-      >
-        <polygon points="10,-100 24,0 6,100 -100,100" />
-      </svg>
-
-      <img
-        class="h-56 w-full object-cover object-right sm:h-72 md:h-96 lg:h-full lg:w-full"
-        :src="hero.coverImage"
-        alt=""
-      />
-    </div>
-
-    <div
-      class="lg:absolute lg:inset-y-0 lg:left-0 lg:w-1/4 cover-header-2 hidden lg:block"
-    >
-      <svg
-        class="absolute inset-y-0 right-48 hidden h-full w-50 translate-x-1/2 transform text-white lg:block"
-        fill="currentColor"
-        viewBox="0 0 100 100"
-        preserveAspectRatio="none"
-        aria-hidden="true"
-      >
-        <polygon points="50 ,-10 100,0 500,100 30,100" />
-      </svg>
-      <img
-        class="h-56 w-full object-cover object-left sm:h-72 md:h-96 lg:h-full lg:w-full"
-        :src="hero.coverImage"
-        alt=""
-      />
-    </div>
   </div>
 </template>
 
@@ -117,25 +117,25 @@ export default {
             start: "top 70%",
             end: "bottom 10%",
 
-            toggleActions: "restart none none restart", // play, pause, resume, reset, restart, complete, reverse,none [start - pass the end point - pass the start point - end]
+            // toggleActions: "play pause pause restart", // play, pause, resume, reset, restart, complete, reverse,none [start - pass the end point - pass the start point - end]
 
             scrub: 3,
 
             onEnter: () => {
               gsap.to(".box-header", {
                 duration: 2,
-                x: isDesktop ? 250 : 0,
+                x: isDesktop ? 180 : 0,
                 y: isMobile || isTablet ? -25 : 0,
                 opacity: 1,
               });
-              gsap.to(".cover-header-1", {
-                duration: 2,
-                x: isDesktop ? -5 : 0,
+              gsap.from(".cover-header-1", {
+                duration: 1,
+                x: isDesktop ? -10 : 0,
                 opacity: 1,
               });
-              gsap.to(".cover-header-2", {
-                duration: 2,
-                x: isDesktop ? 5 : 0,
+              gsap.from(".cover-header-2", {
+                duration: 1,
+                x: isDesktop ? 10 : 0,
                 opacity: 1,
               });
               gsap.to(".title-header", {
@@ -158,12 +158,12 @@ export default {
               });
               gsap.to(".cover-header-1", {
                 duration: 0.5,
-                x: isDesktop ? 5 : 0,
+                x: isDesktop ? 40 : 0,
                 opacity: 0,
               });
               gsap.to(".cover-header-2", {
                 duration: 0.5,
-                x: isDesktop ? -5 : 0,
+                x: isDesktop ? -40 : 0,
                 opacity: 0,
               });
               gsap.to(".title-header", {
@@ -180,18 +180,18 @@ export default {
             onEnterBack: () => {
               gsap.to(".box-header", {
                 duration: 2,
-                x: isDesktop ? 250 : 0,
+                x: isDesktop ? 180 : 0,
                 y: isMobile || isTablet ? -25 : 0,
                 opacity: 1,
               });
               gsap.to(".cover-header-1", {
-                duration: 2,
-                x: isDesktop ? -5 : 0,
+                duration: 1,
+                x: isDesktop ? -10 : 0,
                 opacity: 1,
               });
               gsap.to(".cover-header-2", {
-                duration: 2,
-                x: isDesktop ? 5 : 0,
+                duration: 1,
+                x: isDesktop ? 10 : 0,
                 opacity: 1,
               });
               gsap.to(".title-header", {
@@ -207,28 +207,28 @@ export default {
             },
             onLeaveBack: () => {
               gsap.to(".box-header", {
-                duration: 2,
+                duration: 0.5,
                 x: isDesktop ? -150 : 0,
                 y: isMobile || isTablet ? 25 : 0,
                 opacity: 0,
               });
               gsap.to(".cover-header-1", {
-                duration: 2,
+                duration: 0.5,
                 x: isDesktop ? 5 : 0,
                 opacity: 0,
               });
               gsap.to(".cover-header-2", {
-                duration: 2,
+                duration: 0.5,
                 x: isDesktop ? -5 : 0,
                 opacity: 0,
               });
               gsap.to(".title-header", {
-                duration: 2,
+                duration: 0.5,
                 x: isDesktop ? 80 : 0,
                 opacity: 0,
               });
               gsap.to(".paragraph-header", {
-                duration: 2,
+                duration: 0.5,
                 x: isDesktop ? 50 : 0,
                 opacity: 0,
               });
