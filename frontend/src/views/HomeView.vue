@@ -1,9 +1,11 @@
 <template>
-  <HeroSection />
-  <ServiceStats />
-  <ContentSection />
-  <GuideSteps />
-  <CategoriesSection />
+  <main>
+    <HeroSection />
+    <ServiceStats />
+    <ContentSection />
+    <GuideSteps />
+    <CategoriesSection />
+  </main>
 </template>
 
 <script setup>
