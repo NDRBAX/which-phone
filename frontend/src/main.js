@@ -18,10 +18,21 @@ import {
   faUsers,
   faMobileScreenButton,
   faCommentsDollar,
+  faBrain,
+  faHandHoldingDollar,
+  faCheck,
 } from "@fortawesome/free-solid-svg-icons";
 
 /* add icons to the library */
-library.add(faShop, faUsers, faMobileScreenButton, faCommentsDollar);
+library.add(
+  faShop,
+  faUsers,
+  faMobileScreenButton,
+  faCommentsDollar,
+  faBrain,
+  faHandHoldingDollar,
+  faCheck
+);
 
 const app = createApp(App);
 
