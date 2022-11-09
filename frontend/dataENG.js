@@ -1,8 +1,10 @@
 // NAVIGATION
 const navigation = [
-  { name: "Guid", link: "/", current: true },
-  { name: "Pricing", link: "/pricing", current: false },
-  { name: "About", link: "/about", current: false },
+  { name: "Home", link: "/", current: true },
+  { name: "Advantages", link: "/#advantages", current: false },
+  { name: "Services", link: "/#services", current: false },
+  { name: "Categories", link: "/#categories", current: false },
+  { name: "Contact", link: "/#contact", current: false },
 ];
 
 // HERO
@@ -10,7 +12,7 @@ const hero = {
   title: "Buy smart, love it",
   subtitle: "keep it",
   description:
-    "Anim aute id magna aliqua ad ad non deserunt sunt. Qui irure qui lorem cupidatat commodo. Elit sunt amet fugiat veniam occaecat fugiat aliqua.",
+    "Find the right smartphone for your needs in a few clicks, and extend its life by keeping it longer",
   firstButton: "Get Started",
   firstLink: "/pricing",
   secondButton: "Live Demo",
@@ -101,4 +103,151 @@ const categories = [
   },
 ];
 
-export default { navigation, stats, hero, categories };
+// STEPS SECTION
+const steps = [
+  {
+    icon: "fa-solid fa-check",
+    title: "Fill the form",
+    description:
+      "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+  },
+  {
+    icon: "fa-solid fa-brain",
+    title: "Our algorithm will find the best plan for you",
+    description:
+      "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+  },
+  {
+    icon: "fa-solid fa-hand-holding-dollar",
+    title: "Get results and best offers",
+    description:
+      "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+  },
+];
+
+// CONTENT SECTION
+const content = {
+  title: "How it",
+  subtitle: "works",
+  description:
+    "Once ou have fill out the quick interactive form, our algorithm will provide you the best smartphone that fits your needs, and you will be able to order it in a few clicks at the best price",
+  imageOne:
+    "https://images.unsplash.com/photo-1523726491678-bf852e717f6a?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80",
+  imageTwo:
+    "https://images.unsplash.com/photo-1522202176988-66273c2fd55f?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1171&q=80",
+  imageThree:
+    "https://images.unsplash.com/photo-1529119368496-2dfda6ec2804?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80",
+};
+
+// ADVANTAGES SECTION
+const advantages = {
+  title: "To make the usage",
+  titleTwo: "of smartphones",
+  subtitle: "sustainable",
+  description:
+    "The smartphone you use (and, probably, are using right now) has a significant impact on the environment. Not just the phone you have, but every smartphone that has ever been produced",
+  advantages: [
+    {
+      title: "Over-consumption",
+      description:
+        "<strong>62 distinct metals and metalloids</strong> are used to create a single smartphone. In order to make the <strong>1.4 billion cellphones that were shipped worldwide in 2018</strong>, 34 billion kg of ore, 100 billion liters of water, and 20.5 million kg of cyanide had to be mined",
+    },
+
+    {
+      title: "e-Waste",
+      description:
+        "<strong>50 million tonnes of electronic and electrical trash</strong> were generated last year, with just a fifth of that material being legally recycled. It's estimated that <strong>millions of people labor irregular hours recycling these materials</strong>, frequently in hazardous conditions",
+    },
+  ],
+  image:
+    "https://cdn.pixabay.com/photo/2018/10/09/09/59/mobile-phone-3734545_960_720.jpg",
+};
+
+// REASONS SECTION
+const reasons = {
+  subject: "Benefits",
+  title: "responsibly and make a difference",
+  description:
+    "Smartphones's CO2 emissions are equivalent to the emissions of 50 million cars. The average smartphone user in the EU uses their phone for 2.5 years before replacing it. If we all kept our phones for 5 years, we could save 1.5 million tonnes of CO2e per year",
+
+  reasons: [
+    {
+      title: "Reduce your carbon footprint",
+      description:
+        "Buy once, use for a long time. The more you use your phone, the less you need to buy new ones",
+    },
+    {
+      title: "Understand your needs",
+      description:
+        "Tell us what you need and we will help you find the best device for you",
+    },
+    {
+      title: "Save your time",
+      description:
+        "You don't have to spend hours looking for the right device, reading reviews and comparing prices",
+    },
+    {
+      title: "Save money",
+      description: "Your smartphone will last longer and you will save money",
+    },
+  ],
+};
+
+// PUBLIC SECTION
+const users = {
+  subject: "Users",
+  title: "need help to make the right choice",
+  description:
+    "We have a wide range of devices for everyone, from children to grandparents, from travelers to students",
+  firstImage:
+    "https://images.unsplash.com/photo-1617560611911-85e1055544cd?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80",
+  secondImage:
+    "https://images.unsplash.com/photo-1534120045191-89e4963980a7?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1226&q=80",
+  thirdImage:
+    "https://images.unsplash.com/photo-1503164592308-0b42e96735c7?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1173&q=80",
+  users: [
+    {
+      title: "Students",
+      description:
+        "Social media, online shopping, streaming, gaming, and more. Students need a phone that can handle it all. But they also need a phone that can handle the bumps and bruises of everyday life",
+    },
+    {
+      title: "Business",
+      description:
+        "Your smartphone goes everywhere with you. Through the day, you use it to check emails, make calls, and send texts. At night, you use it to watch videos, play games, and browse the web. You need a phone that can keep up with you",
+    },
+    {
+      title: "Parents",
+      description:
+        "You use it to stay connected to your family, friends, and coworkers. You need a phone that can keep up with you. Or you need help to find the right phone for your child",
+    },
+
+    {
+      title: "Seniors",
+      description:
+        "You don't need a phone that can handle the latest games and apps. You need a phone that's easy to use and can help you stay connected to the people you care about",
+    },
+  ],
+};
+
+// NEWSLETTER SECTION
+const newsletter = {
+  title: "to our newsletter",
+  description:
+    "Don't miss out on the latest news and offers. We promise not to spam you or sell your email address",
+  subject: "Newsletter",
+  subtitle: "Subscribe",
+};
+
+export default {
+  navigation,
+  stats,
+  hero,
+  categories,
+  advantages,
+  reasons,
+  newsletter,
+  content,
+  users,
+  steps,
+};
