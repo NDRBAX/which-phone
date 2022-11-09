@@ -16,3 +16,9 @@ export default {
   components: { NavBar, FooterOne, RouterView },
 };
 </script>
+
+<style>
+body {
+  overflow-x: hidden;
+}
+</style>
