@@ -113,13 +113,13 @@ const steps = [
   },
   {
     icon: "fa-solid fa-brain",
-    title: "Our algorithm will find the best plan for you",
+    title: "Algorithm analysis",
     description:
       "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
   },
   {
     icon: "fa-solid fa-hand-holding-dollar",
-    title: "Get results and best offers",
+    title: "Results at best price",
     description:
       "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
   },
