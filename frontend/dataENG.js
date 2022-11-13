@@ -5,6 +5,7 @@ const navigation = [
   { name: "Services", link: "/#services", current: false },
   { name: "Categories", link: "/#categories", current: false },
   { name: "Contact", link: "/#contact", current: false },
+  { name: "Search", link: "/search", current: false },
 ];
 
 // HERO
