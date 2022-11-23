@@ -1,11 +1,13 @@
 <template>
-  <header>
-    <NavBar />
-  </header>
-  <RouterView />
-  <footer>
-    <FooterOne />
-  </footer>
+  <div id="app">
+    <header>
+      <NavBar />
+    </header>
+    <RouterView />
+    <footer>
+      <FooterOne />
+    </footer>
+  </div>
 </template>
 
 <script>
