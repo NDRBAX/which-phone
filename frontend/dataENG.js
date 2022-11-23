@@ -1,10 +1,10 @@
 // NAVIGATION
 const navigation = [
   { name: "Home", link: "/", current: true },
-  { name: "Advantages", link: "/#advantages", current: false },
-  { name: "Services", link: "/#services", current: false },
-  { name: "Categories", link: "/#categories", current: false },
-  { name: "Contact", link: "/#contact", current: false },
+  // { name: "Advantages", link: "/#advantages", current: false },
+  // { name: "Services", link: "/#services", current: false },
+  // { name: "Categories", link: "/#categories", current: false },
+  // { name: "Contact", link: "/#contact", current: false },
   { name: "Search", link: "/search", current: false },
 ];
 
