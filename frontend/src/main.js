@@ -21,6 +21,7 @@ import {
   faBrain,
   faHandHoldingDollar,
   faCheck,
+  faChild,
 } from "@fortawesome/free-solid-svg-icons";
 
 /* add icons to the library */
@@ -31,7 +32,8 @@ library.add(
   faCommentsDollar,
   faBrain,
   faHandHoldingDollar,
-  faCheck
+  faCheck,
+  faChild
 );
 
 const app = createApp(App);
