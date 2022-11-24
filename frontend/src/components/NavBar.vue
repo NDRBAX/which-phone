@@ -120,10 +120,4 @@ import { RouterLink } from "vue-router";
 import { inject } from "vue";
 
 const navigation = inject("dataENG").navigation;
-
-// const navigation = [
-//   { name: "Guid", link: "/", current: true },
-//   { name: "Pricing", link: "/pricing", current: false },
-//   { name: "About", link: "/about", current: false },
-// ];
 </script>
