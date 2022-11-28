@@ -240,6 +240,123 @@ const newsletter = {
   subtitle: "Subscribe",
 };
 
+// FORM DATA
+const formData = [
+  {
+    title: "Step 1",
+    active: true,
+    questions: [
+      {
+        type: "radio",
+        label: "For whom are you looking to buy a phone ?",
+        choices: [
+          {
+            label: "Choice 1",
+            title: "A child",
+          },
+          {
+            label: "Choice 2",
+            title: "An adult",
+          },
+          {
+            label: "Choice 3",
+            title: "A senior",
+          },
+        ],
+        selected: "",
+      },
+    ],
+  },
+  {
+    title: "Step 2",
+    active: false,
+    questions: [
+      {
+        type: "radio",
+        label: "How much time do you spend on your phone ?",
+
+        choices: [
+          {
+            label: "Choice 1",
+            title: "Less than 1 hour",
+          },
+          {
+            label: "Choice 2",
+            title: "1-2 hours",
+          },
+          {
+            label: "Choice 3",
+            title: "2-3 hours",
+          },
+          {
+            label: "Choice 4",
+            title: "More than 3 hours",
+          },
+        ],
+        selected: "",
+      },
+    ],
+  },
+  {
+    title: "Step 3",
+    active: false,
+    questions: [
+      {
+        type: "checkbox",
+        label: "What do you use your phone for ?",
+        choices: [
+          {
+            label: "Choice 1",
+            title: "Social media",
+          },
+          {
+            label: "Choice 2",
+            title: "Playing games",
+          },
+          {
+            label: "Choice 3",
+            title: "Watching videos",
+          },
+          {
+            label: "Choice 4",
+            title: "Taking photos",
+          },
+          {
+            label: "Choice 5",
+            title: "Reading",
+          },
+          {
+            label: "Choice 6",
+            title: "Writing",
+          },
+          {
+            label: "Choice 7",
+            title: "Listening to music",
+          },
+
+          {
+            label: "Choice 8",
+            title: "Watching movies",
+          },
+          {
+            label: "Choice 9",
+            title: "Watching TV",
+          },
+          {
+            label: "Choice 10",
+            title: "Browsing the internet",
+          },
+          {
+            label: "Choice 11",
+            title: "Other",
+          },
+        ],
+        selected: [],
+      },
+    ],
+  },
+];
+
 export default {
   navigation,
   stats,
@@ -251,4 +368,5 @@ export default {
   content,
   users,
   steps,
+  formData,
 };
