@@ -16,6 +16,11 @@ const router = createRouter({
       name: "login",
       component: LoginView,
     },
+    {
+      path: "/search",
+      name: "search",
+      component: () => import("../views/SearchView.vue"),
+    },
   ],
 });
 
