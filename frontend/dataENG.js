@@ -309,11 +309,11 @@ const formData = [
           },
           {
             label: "Choice 2",
-            title: "Playing games",
+            title: "Gaming",
           },
           {
             label: "Choice 3",
-            title: "Watching videos",
+            title: "Online Video",
           },
           {
             label: "Choice 4",
@@ -321,32 +321,20 @@ const formData = [
           },
           {
             label: "Choice 5",
-            title: "Reading",
-          },
-          {
-            label: "Choice 6",
-            title: "Writing",
-          },
-          {
-            label: "Choice 7",
-            title: "Listening to music",
+            title: "Music",
           },
 
           {
+            label: "Choice 6",
+            title: "Reading",
+          },
+          {
+            label: "Choice 7",
+            title: "Communicating (email, text, phone)",
+          },
+          {
             label: "Choice 8",
-            title: "Watching movies",
-          },
-          {
-            label: "Choice 9",
-            title: "Watching TV",
-          },
-          {
-            label: "Choice 10",
-            title: "Browsing the internet",
-          },
-          {
-            label: "Choice 11",
-            title: "Other",
+            title: "Web browsing",
           },
         ],
       },
