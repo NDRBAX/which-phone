@@ -67,7 +67,7 @@
                       :name="choice.title"
                       :id="choice.title"
                       v-model="question.title"
-                      v-on:change="handleRadioChange"
+                      v-on:change="handleRadioChange(choice.title)"
                     />
                     <label
                       class="flex p-5 text-gray-500 hover:text-gray-700 cursor-pointer peer-checked:text-green-600"
@@ -120,25 +120,24 @@ export default {
       }
     });
 
-    // send total number of step to store
-    const { setTotalSteps } = useCheckedStore();
-    setTotalSteps(steps.length);
-
     // Progress bar
     function progressValue(step) {
       return step * (100 / steps.length);
     }
 
     // handdleRadioChange function to send data to store
-    const { setChecked } = useCheckedStore();
-    function handleRadioChange() {
-      setChecked(currentStep.value);
-      const { getChecked } = useCheckedStore();
+    function handleRadioChange(item) {
+      const { setCheckedByStep } = useCheckedStore();
+      setCheckedByStep(
+        currentStepIndex.value,
+        currentStep.value.questions[0].label,
+        item
+      );
       if (currentStepIndex.value < steps.length) {
         currentStepIndex.value++;
         currentStep.value = steps[currentStepIndex.value - 1];
       } else {
-        console.log(getChecked());
+        console.log("getCheckedByStep(1)");
       }
     }
 
@@ -198,13 +197,14 @@ export default {
 
     // submit form
     function submitForm() {
-      const { getChecked } = useCheckedStore();
+      const { setCheckedByStep } = useCheckedStore();
       console.log("submit");
       console.log(checkedStorage);
-      // store checkedStorage to store
-      setChecked(checkedStorage);
-
-      console.log(getChecked());
+      setCheckedByStep(
+        currentStepIndex.value,
+        currentStep.value.questions[0].label,
+        checkedStorage
+      );
     }
 
     return {
