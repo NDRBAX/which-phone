@@ -129,13 +129,6 @@ export default {
       return step * (100 / steps.length);
     }
 
-    const nextStep = () => {
-      if (currentStepIndex.value < steps.length) {
-        currentStepIndex.value++;
-        currentStep.value = steps[currentStepIndex.value - 1];
-      }
-    };
-
     // handdleRadioChange function to send data to store
     const { setChecked } = useCheckedStore();
     function handleRadioChange() {
@@ -149,7 +142,7 @@ export default {
       }
     }
 
-    const maxChecked = ref(3);
+    const maxChecked = ref(4);
     let checkedStorage = [];
 
     // handdleCheckboxChange function to send data to store
@@ -162,9 +155,20 @@ export default {
             } else {
               checkedStorage = checkedStorage.filter((i) => i !== item);
             }
-          } else {
+          } else if (checkedStorage.length >= maxChecked.value) {
             if (choice.id) {
-              choice.id = false;
+              const lastItem = checkedStorage[checkedStorage.length - 1];
+              // find the id of last added item
+              const lastItemIndex =
+                currentStep.value.questions[0].choices.findIndex(
+                  (choice) => choice.title === lastItem
+                );
+              // uncheck the last added item
+              currentStep.value.questions[0].choices[lastItemIndex].id = false;
+              // remove the last added item from checkedStorage
+              checkedStorage.pop();
+              // add the new item to checkedStorage
+              checkedStorage.push(item);
             } else {
               checkedStorage = checkedStorage.filter((i) => i !== item);
             }
@@ -172,7 +176,7 @@ export default {
         }
       });
 
-      console.log(checkedStorage);
+      // console.log(checkedStorage);
     }
     // previous step
     const previousStep = () => {
@@ -182,7 +186,26 @@ export default {
       }
     };
 
+    // next step
+    const nextStep = () => {
+      if (currentStepIndex.value < steps.length) {
+        currentStepIndex.value++;
+        currentStep.value = steps[currentStepIndex.value - 1];
+      } else if (currentStepIndex.value === steps.length) {
+        submitForm();
+      }
+    };
+
     // submit form
+    function submitForm() {
+      const { getChecked } = useCheckedStore();
+      console.log("submit");
+      console.log(checkedStorage);
+      // store checkedStorage to store
+      setChecked(checkedStorage);
+
+      console.log(getChecked());
+    }
 
     return {
       steps,
