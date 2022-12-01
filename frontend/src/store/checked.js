@@ -1,42 +1,58 @@
 import { defineStore } from "pinia";
 
-export const useCheckedStore = defineStore("checkedValues", {
-  // total number of steps
+export const useCheckedStore = defineStore({
+  id: "checked",
+  // state to be used by the store for the checked items by step and by question
   state: () => ({
-    steps: Number,
     values: [
       {
-        step: Number,
-        type: String,
-        choices: [],
+        step: null,
+        question: [
+          {
+            label: null,
+            checked: [],
+          },
+        ],
       },
     ],
   }),
 
   getters: {
-    getTotalSteps(state) {
-      console.log("getTotalSteps", state.steps);
-      return state.steps;
+    getCheckedByStep: (state) => (step) => {
+      return state.values[step].question;
     },
-    // get values
-    getCurrentStepValues(state) {
-      console.log("getCurrentStepValues", state.values);
-      return state.values;
-    },
-    getChecked(state) {
-      console.log("getChecked", state.values);
+    getAllValues: (state) => {
+      // console.log("state.values", state.values);
       return state.values;
     },
   },
   actions: {
-    setTotalSteps(steps) {
-      this.steps = steps;
-    },
-    setCurrentStep(step) {
-      this.currentStep = step;
-    },
-    setChecked(values) {
-      this.values = values;
+    setCheckedByStep(step, label, checked) {
+      // check if step exists
+      if (this.values[step]) {
+        // remove the step
+        this.values.splice(step, 1);
+        this.values.splice(step, 0, {
+          step: step,
+          question: [
+            {
+              label: label,
+              checked: checked,
+            },
+          ],
+        });
+      } else {
+        this.values[step] = {
+          step: step,
+          question: [
+            {
+              label: label,
+              checked: checked,
+            },
+          ],
+        };
+      }
+      console.log(this.getAllValues);
     },
   },
 });
