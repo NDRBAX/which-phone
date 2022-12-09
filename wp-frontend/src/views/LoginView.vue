@@ -17,12 +17,13 @@
         <p class="mt-2 text-center text-sm text-gray-600">
           Or
           {{ " " }}
-          <a
-            href="/register"
+          <RouterLink
+            to="/register"
             class="font-medium text-green-600 hover:text-green-500"
-            >create an account to unclock all features</a
+            >create an account to unclock all features</RouterLink
           >
         </p>
+        <MessageError :errors="errors" @close="closeMessageError" />
       </div>
       <form class="mt-8 space-y-6" v-on:submit.prevent="submitForm">
         <input type="hidden" name="remember" value="true" />
@@ -55,26 +56,6 @@
           </div>
         </div>
 
-        <div class="flex items-center justify-between">
-          <div class="flex items-center">
-            <input
-              id="remember-me"
-              name="remember-me"
-              type="checkbox"
-              class="h-4 w-4 rounded border-gray-300 text-green-600 focus:ring-green-500"
-            />
-            <label for="remember-me" class="ml-2 block text-sm text-gray-900"
-              >Remember me</label
-            >
-          </div>
-
-          <div class="text-sm">
-            <a href="#" class="font-medium text-green-600 hover:text-green-500"
-              >Forgot your password?</a
-            >
-          </div>
-        </div>
-
         <div>
           <button
             type="submit"
@@ -97,12 +78,14 @@
 <script>
 import { LockClosedIcon } from "@heroicons/vue/20/solid";
 import { useAuthStore } from "../stores/auth";
+import MessageError from "../components/MessageError.vue";
 import axios from "axios";
 
 export default {
   name: "LoginView",
   components: {
     LockClosedIcon,
+    MessageError,
   },
   data() {
     return {
@@ -119,22 +102,31 @@ export default {
       };
 
       axios.defaults.headers.common["Authorization"] = "";
+      localStorage.removeItem("access");
 
       axios
-        .post("/auth/token/login/", formData)
+        .post("/auth/jwt/create/", formData)
         .then((response) => {
-          const token = response.data.auth_token;
-          console.log(token);
-          const { setToken } = useAuthStore();
-          setToken(token);
+          const access = response.data.access;
+          const refresh = response.data.refresh;
+          let authStore = useAuthStore();
+          authStore.setAccess(access);
+          authStore.setRefresh(refresh);
+          axios.defaults.headers.common["Authorization"] = `JWT ${access}`;
 
-          axios.defaults.headers.common["Authorization"] = `Token ${token}`;
-
+          axios.get("/auth/users/me/").then((response) => {
+            const user = response.data.username;
+            console.log(user);
+            authStore.setUser(user);
+          });
           this.$router.push("/");
         })
         .catch((error) => {
-          console.log(error);
+          this.errors = error.response.data;
         });
+    },
+    closeMessageError() {
+      this.errors = {};
     },
   },
 };
