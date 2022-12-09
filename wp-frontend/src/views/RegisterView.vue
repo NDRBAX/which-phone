@@ -17,12 +17,13 @@
         <p class="mt-2 text-center text-sm text-gray-600">
           Or
           {{ " " }}
-          <a
-            href="/login"
+          <RouterLink
+            to="/login"
             class="font-medium text-green-600 hover:text-green-500"
-            >login to your account</a
+            >login to your account</RouterLink
           >
         </p>
+        <MessageError :errors="errors" @close="closeMessageError" />
       </div>
       <form class="mt-8 space-y-6" v-on:submit.prevent="submitForm">
         <input type="hidden" name="remember" value="true" />
@@ -48,7 +49,7 @@
               type="email"
               autocomplete="email"
               required=""
-              class="relative block w-full appearance-none rounded-none rounded-t-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-green-500 focus:outline-none focus:ring-green-500 sm:text-sm"
+              class="relative block w-full appearance-none rounded-none border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-green-500 focus:outline-none focus:ring-green-500 sm:text-sm"
               placeholder="Email address"
               v-model="email"
             />
@@ -61,7 +62,7 @@
               type="password"
               autocomplete="current-password"
               required=""
-              class="relative block w-full appearance-none rounded-none rounded-b-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-green-500 focus:outline-none focus:ring-green-500 sm:text-sm"
+              class="relative block w-full appearance-none rounded-none border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-green-500 focus:outline-none focus:ring-green-500 sm:text-sm"
               placeholder="Password"
               v-model="password"
             />
@@ -103,11 +104,13 @@
 <script>
 import { LockClosedIcon } from "@heroicons/vue/20/solid";
 import axios from "axios";
+import MessageError from "../components/MessageError.vue";
 
 export default {
   name: "RegisterView",
   components: {
     LockClosedIcon,
+    MessageError,
   },
   data() {
     return {
@@ -134,8 +137,11 @@ export default {
           this.$router.push("/");
         })
         .catch((error) => {
-          console.log(error);
+          this.errors = error.response.data;
         });
+    },
+    closeMessageError() {
+      this.errors = {};
     },
   },
 };
