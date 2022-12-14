@@ -8,51 +8,46 @@ export const useCheckedStore = defineStore({
     values: [
       {
         step: null,
-        question: [
-          {
-            label: null,
-            checked: [],
-          },
-        ],
+        checked: [],
       },
     ],
   }),
 
   getters: {
-    getCheckedByStep: (state) => (step) => {
-      return state.values[step].question;
+    getValuesByStep: (state) => (step) => {
+      return state.values[step];
     },
     getAllValues: (state) => {
-      // console.log("state.values", state.values);
       return state.values;
     },
   },
   actions: {
-    setCheckedByStep(step, label, checked) {
+    setCheckedByStep(step, checked) {
       // check if step exists
       if (this.values[step]) {
         // remove the step
         this.values.splice(step, 1);
         this.values.splice(step, 0, {
           step: step,
-          question: [
-            {
-              label: label,
-              checked: checked,
-            },
-          ],
+          checked: [checked],
         });
       } else {
         this.values[step] = {
           step: step,
-          question: [
-            {
-              label: label,
-              checked: checked,
-            },
-          ],
+          checked: [checked],
         };
       }
+      console.log(this.getAllValues);
+    },
+
+    clearStore() {
+      this.values = [
+        {
+          step: null,
+          checked: [],
+        },
+      ];
+      console.log("cleared");
       console.log(this.getAllValues);
     },
 
@@ -77,6 +72,9 @@ export const useCheckedStore = defineStore({
       }
 
       let jsonData = JSON.stringify(data);
+      console.log("jsonData", jsonData);
+
+      console.log(this.getAllValues);
       let config = {
         withCredentials: false,
         headers: {
