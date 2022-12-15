@@ -2,7 +2,7 @@
   <div>
     <!-- progress bar for steps -->
     <progress
-      class="progress progress-accent w-full px-10 mt-10"
+      class="progress progress-success w-full px-10 mt-10"
       max="100"
       :value="progressValue(currentStepIndex)"
     ></progress>
@@ -14,21 +14,24 @@
         <div class="card-body">
           <form class="space-y-3">
             <div v-for="data in currentStep.questions" :key="data.label">
+              <div class="text-4xl font-bold text-gray-900 text-center mb-8">
+                <p
+                  class="inline-block px-3 py-px mb-4 text-xs font-semibold tracking-wider text-teal-900 uppercase rounded-full bg-teal-accent-400"
+                >
+                  {{ data.step }}
+                </p>
+                <p v-html="data.label"></p>
+              </div>
               <!-- RADIO -->
               <div
                 v-if="data.type === 'radio'"
                 class="justify-center space-y-2"
               >
-                <div
-                  class="text-2xl font-thin font-bold text-gray-700 text-center mb-8"
-                >
-                  <p>{{ data.label }}</p>
-                </div>
                 <div class="flex flex-wrap flex-row justify-center">
                   <div
                     v-for="choice in data.choices"
                     :key="choice.value"
-                    class="basis-auto p-3"
+                    class="basis-auto px-3 py-1"
                   >
                     <input
                       class="sr-only peer"
@@ -39,7 +42,7 @@
                     />
                     <label
                       :for="choice.value"
-                      class="flex p-5 text-gray-500 hover:text-gray-700 cursor-pointer peer-checked:text-green-600"
+                      class="flex uppercase duration-300 font-semibold transform text-white text-4xl hover:text-teal-accent-400 font-black cursor-pointer peer-checked:text-teal-accent-400"
                     >
                       {{ choice.label }}
                     </label>
@@ -51,16 +54,11 @@
                 v-else-if="data.type === 'checkbox'"
                 class="justify-center space-y-2"
               >
-                <div
-                  class="text-2xl font-thin font-bold text-gray-700 text-center mb-8"
-                >
-                  <p>{{ data.label }}</p>
-                </div>
                 <div class="flex flex-wrap flex-row justify-center">
                   <div
                     v-for="choice in data.choices"
                     :key="data.label + choice.value"
-                    class="basis-auto p-3"
+                    class="basis-auto px-3"
                   >
                     <input
                       class="sr-only peer"
@@ -71,7 +69,7 @@
                     />
                     <label
                       :for="choice.value"
-                      class="flex p-5 text-gray-500 hover:text-gray-700 cursor-pointer peer-checked:text-green-600"
+                      class="flex uppercase duration-300 font-semibold transform text-white text-4xl hover:text-teal-accent-400 font-black cursor-pointer peer-checked:text-teal-accent-400"
                     >
                       {{ choice.label }}
                     </label>
@@ -88,14 +86,18 @@
     <div class="flex flex-row items-center justify-center mt-10">
       <button
         id="previous"
-        class="btn btn-base-300"
+        class="inline-flex items-center justify-center w-full h-12 px-6 font-medium tracking-wide text-gray-900 bg-white ring-inset ring-2 ring-gray-900 enabled:hover:ring-0 enabled:hover:bg-gray-900 enabled:hover:text-white transition duration-200 rounded shadow-md md:w-auto focus:shadow-outline focus:outline-none disabled:opacity-50"
         :disabled="currentStepIndex == 1"
         v-on:click="previousStep"
       >
         {{ previous }}
       </button>
 
-      <button id="next" class="btn btn-accent ml-4" v-on:click="nextStep()">
+      <button
+        id="next"
+        class="inline-flex items-center justify-center w-full h-12 px-6 font-medium tracking-wide text-white transition duration-200 rounded shadow-md md:w-auto bg-teal-accent-400 enabled:hover:bg-teal-accent-600 focus:shadow-outline focus:outline-none ml-4 disabled:opacity-50"
+        v-on:click="nextStep()"
+      >
         {{ next }}
       </button>
     </div>
@@ -103,6 +105,7 @@
 </template>
 <script>
 import { useCheckedStore } from "../stores/checked";
+
 import MessageError from "./MessageError.vue";
 export default {
   name: "MultiStepForm",
@@ -126,7 +129,7 @@ export default {
         },
         {
           step: 4,
-          checked: "",
+          checked: [],
         },
         {
           step: 5,
@@ -218,7 +221,7 @@ export default {
           },
           {
             step: 4,
-            checked: "",
+            checked: [],
           },
           {
             step: 5,
@@ -311,28 +314,22 @@ export default {
 @import url("https://fonts.googleapis.com/css2?family=Train+One&display=swap");
 
 label {
-  display: inline;
-  position: relative;
-
-  /*label styling*/
-  border: 0px solid #000;
-  font-family: "Train One", cursive;
-  font-size: 1.7rem;
-  font-weight: 500;
-  line-height: 14px;
-  vertical-align: baseline;
-  white-space: nowrap;
-  text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
-  padding: 0;
+  -webkit-text-stroke-width: 1px;
+  -webkit-text-stroke-color: #1de9b6;
 }
 
 label:hover {
-  font-weight: 550;
-  letter-spacing: 0;
+  -webkit-text-stroke-width: 0px;
+}
+
+input:checked + label {
+  -webkit-text-stroke-width: 0px;
 }
 /* 
-input[type="checkbox"]:checked,
-input[type="radio"]:checked {
-  font-size: 3.5rem;
+button:disabled,
+button:disabled:hover {
+  background-color: gray;
+  color: #fff;
+  border: 1px solid #1de9b6;
 } */
 </style>
