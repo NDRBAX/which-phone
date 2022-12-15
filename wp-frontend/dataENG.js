@@ -241,27 +241,191 @@ const newsletter = {
 };
 
 // FORM DATA
-const formData = [
+// const formDataBack = [
+//   {
+//     title: "Step 1",
+//     active: true,
+//     questions: [
+//       {
+//         type: "radio",
+//         label: "How much time do you spend on your phone ?",
+
+//         choices: [
+//           {
+//             label: "Choice 1",
+//             title: "Less than 1 hour",
+//           },
+//           {
+//             label: "Choice 2",
+//             title: "1-2 hours",
+//           },
+//           {
+//             label: "Choice 3",
+//             title: "2-3 hours",
+//           },
+//           {
+//             label: "Choice 4",
+//             title: "More than 3 hours",
+//           },
+//         ],
+//       },
+//     ],
+//   },
+//   {
+//     title: "Step 2",
+//     active: false,
+//     questions: [
+//       {
+//         type: "checkbox",
+//         label: "What are the main tasks you will use your smartphone for ?",
+//         choices: [
+//           {
+//             label: "Choice 1",
+//             title: "Calls, Messaging and Mails",
+//           },
+//           {
+//             label: "Choice 2",
+//             title: "Multimedia (Music, Videos, Photos)",
+//           },
+//           {
+//             label: "Choice 3",
+//             title: "Games",
+//           },
+//           {
+//             label: "Choice 4",
+//             title: "Social Networks",
+//           },
+//           {
+//             label: "Choice 5",
+//             title: "Web browsing",
+//           },
+
+//           {
+//             label: "Choice 6",
+//             title: "News, Weather and GPS",
+//           },
+//         ],
+//       },
+//     ],
+//   },
+//   {
+//     title: "Step 3",
+//     active: false,
+//     questions: [
+//       {
+//         type: "checkbox",
+//         label:
+//           "What are the key features you are looking for in a smartphone ?",
+//         choices: [
+//           {
+//             label: "Choice 1",
+//             title: "Fast processor",
+//           },
+//           {
+//             label: "Choice 2",
+//             title: "High resolution screen",
+//           },
+//           {
+//             label: "Choice 3",
+//             title: "Dedicated graphics processor",
+//           },
+//           {
+//             label: "Choice 4",
+//             title: "Large battery",
+//           },
+//           {
+//             label: "Choice 5",
+//             title: "High quality camera",
+//           },
+
+//           {
+//             label: "Choice 6",
+//             title: "Plenty of storage space",
+//           },
+//           {
+//             label: "Choice 7",
+//             title: "Long-range connectivity",
+//           },
+//           {
+//             label: "Choice 8",
+//             title: "Large display",
+//           },
+//           {
+//             label: "Choice 9",
+//             title: "GPS capabilities",
+//           },
+//         ],
+//       },
+//     ],
+//   },
+//   {
+//     title: "Step 4",
+//     active: false,
+//     questions: [
+//       {
+//         type: "radio",
+//         label: "For whom are you looking to buy a phone ?",
+//         choices: [
+//           {
+//             label: "Choice 1",
+//             title: "A child",
+//           },
+//           {
+//             label: "Choice 2",
+//             title: "An adult",
+//           },
+//           {
+//             label: "Choice 3",
+//             title: "A senior",
+//           },
+//         ],
+//       },
+//     ],
+//   },
+//   {
+//     title: "Step 5",
+//     active: false,
+//     questions: [
+//       {
+//         type: "radio",
+//         label: "What is your budget range ?",
+//         choices: [
+//           {
+//             label: "Choice 1",
+//             title: "under $200",
+//           },
+//           {
+//             label: "Choice 2",
+//             title: "$200 - $400",
+//           },
+//           {
+//             label: "Choice 3",
+//             title: "$400 - $600",
+//           },
+//           {
+//             label: "Choice 4",
+//             title: "over $600",
+//           },
+//         ],
+//       },
+//     ],
+//   },
+// ];
+const multiStepFormData = [
   {
     title: "Step 1",
     active: true,
     questions: [
       {
+        label:
+          "Your average <span class='text-teal-accent-400'>daily phone usage </span>time",
         type: "radio",
-        label: "For whom are you looking to buy a phone ?",
+        step: "First step",
         choices: [
-          {
-            label: "Choice 1",
-            title: "A child",
-          },
-          {
-            label: "Choice 2",
-            title: "An adult",
-          },
-          {
-            label: "Choice 3",
-            title: "A senior",
-          },
+          { value: "less_than_1_hour", label: "Less than 1 hour" },
+          { value: "1_2_hours", label: "1-2 hours" },
+          { value: "2_3_hours", label: "2-3 hours" },
+          { value: "more_than_3_hours", label: "More than 3 hours" },
         ],
       },
     ],
@@ -271,25 +435,25 @@ const formData = [
     active: false,
     questions: [
       {
-        type: "radio",
-        label: "How much time do you spend on your phone ?",
-
+        label:
+          "Your <span class='text-teal-accent-400'>main smartphone usage</span> will be for",
+        type: "checkbox",
+        step: "Second step",
         choices: [
           {
-            label: "Choice 1",
-            title: "Less than 1 hour",
+            value: "calls_messaging_and_mails",
+            label: "Calls, Messaging and Mails",
           },
           {
-            label: "Choice 2",
-            title: "1-2 hours",
+            value: "multimedia_music_videos_photos",
+            label: "Multimedia (Music, Videos, Photos)",
           },
+          { value: "games", label: "Games" },
+          { value: "social_networks", label: "Social Networks" },
+          { value: "web_browsing", label: "Web browsing" },
           {
-            label: "Choice 3",
-            title: "2-3 hours",
-          },
-          {
-            label: "Choice 4",
-            title: "More than 3 hours",
+            value: "news_weather_and_gps",
+            label: "News, Weather and GPS",
           },
         ],
       },
@@ -300,42 +464,83 @@ const formData = [
     active: false,
     questions: [
       {
+        label:
+          "The <span class='text-teal-accent-400'> most important features</span> you're looking for in a smartphone",
         type: "checkbox",
-        label: "What do you use your phone for ?",
+        step: "Third step",
+        choices: [
+          { value: "fast_processor", label: "Fast Processor" },
+          {
+            value: "high_resolution_screen",
+            label: "High Resolution Screen",
+          },
+          {
+            value: "dedicated_graphics_processor",
+            label: "Dedicated Graphics Processor",
+          },
+          { value: "large_battery", label: "Large Battery" },
+          {
+            value: "high_quality_camera",
+            label: "High Quality Camera",
+          },
+          {
+            value: "plenty_of_storage_space",
+            label: "Plenty of Storage Space",
+          },
+          {
+            value: "long_range_connectivity",
+            label: "Long-range Connectivity",
+          },
+          { value: "large_display", label: "Large Display" },
+          { value: "gps_capabilities", label: "GPS Capabilities" },
+        ],
+      },
+    ],
+  },
+  {
+    title: "Step 4",
+    active: false,
+    questions: [
+      {
+        label:
+          "You need a smartphone with <span class='text-teal-accent-400'>particular features</span>",
+        type: "checkbox",
+        step: "Fourth step",
         choices: [
           {
-            label: "Choice 1",
-            title: "Social media",
+            value: "age_appropriate_content",
+            label: "Age-appropriate content",
+          },
+          { value: "parental_controls", label: "Parental controls" },
+          {
+            value: "simple__user_interface",
+            label: "Simple user interface",
           },
           {
-            label: "Choice 2",
-            title: "Gaming",
+            value: "easy_to_press_buttons",
+            label: "Large, easy-to-press buttons",
           },
           {
-            label: "Choice 3",
-            title: "Online Video",
+            value: "aid_compatibility",
+            label: "Hearing aid compatibility mode",
           },
-          {
-            label: "Choice 4",
-            title: "Taking photos",
-          },
-          {
-            label: "Choice 5",
-            title: "Music",
-          },
-
-          {
-            label: "Choice 6",
-            title: "Reading",
-          },
-          {
-            label: "Choice 7",
-            title: "Communicating (email, text, phone)",
-          },
-          {
-            label: "Choice 8",
-            title: "Web browsing",
-          },
+        ],
+      },
+    ],
+  },
+  {
+    title: "Step 5",
+    active: false,
+    questions: [
+      {
+        label: "What is your budget range ?",
+        type: "radio",
+        step: "Last step",
+        choices: [
+          { value: "under_200", label: "Under $200" },
+          { value: "200_400", label: "$200 - $400" },
+          { value: "400_600", label: "$400 - $600" },
+          { value: "over_600", label: "Over $600" },
         ],
       },
     ],
@@ -353,5 +558,5 @@ export default {
   content,
   users,
   steps,
-  formData,
+  multiStepFormData,
 };
