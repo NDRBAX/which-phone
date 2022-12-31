@@ -1,9 +1,12 @@
 <template>
   <div id="app">
     <header>
-      <NavBar :username="username" />
+      <NavBar />
     </header>
-    <RouterView />
+    <body>
+      <RouterView />
+    </body>
+
     <footer>
       <FooterOne />
     </footer>
@@ -63,6 +66,7 @@ export default {
   },
   beforeCreate() {
     let authStore = useAuthStore();
+
     authStore.initializeStore();
 
     const access = authStore.getAccess;
@@ -74,17 +78,30 @@ export default {
       axios.defaults.headers.common["Authorization"] = "";
     }
   },
+
   mounted() {
     this.getCsrfToken();
-  },
-  beforeMount() {
-    this.username = useAuthStore().getUser;
   },
 };
 </script>
 
 <style>
+@import url("https://fonts.googleapis.com/css2?family=Maven+Pro:wght@400;500;600;700;800;900&display=swap");
+
 body {
   overflow-x: hidden;
+  font-family: "Maven Pro", sans-serif;
+  min-height: calc(100vh - 4rem);
+}
+
+::-webkit-scrollbar {
+  width: 12px;
+  background-color: #fff;
+}
+
+::-webkit-scrollbar-thumb {
+  border-radius: 10px;
+
+  background-color: #1de9b6;
 }
 </style>
