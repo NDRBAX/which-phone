@@ -1,116 +1,149 @@
 <template>
-  <div>
-    <!-- progress bar for steps -->
-    <progress
-      class="progress progress-success w-full px-10 mt-10"
-      max="100"
-      :value="progressValue(currentStepIndex)"
-    ></progress>
-    <MessageError :errors="errors" @close="closeMessageError" class="m-10" />
-    <div class="flex flex-col items-center justify-center">
+  <CustomLoader v-if="loading" />
+  <div class="xs:text-lg sm:text-2xl md:text-3xl lg:text-4xl text-4xl">
+    <div class="w-2/3 mx-auto text-lg flex justify-center">
+      <MessageError
+        :errors="errors"
+        :close="closeMessageError"
+        :type="isError"
+      />
+    </div>
+    <div class="flex justify-center text-white xs:grid xs:grid-cols-10 w-full">
       <div
-        class="card p-[50px] mt-5 w-full max-w-4xl bg-white rounded shadow-xl"
+        class="text-lg xs:text-xs sm:text-sm sm-mx-auto xs:col-start-1 xs:col-span-4 sm:col-start-2 sm:col-span-8 mx-auto md:col-start-1 md:col-span-10 lg:col-start-2 lg:col-span-8"
       >
-        <div class="card-body">
-          <form class="space-y-3">
-            <div v-for="data in currentStep.questions" :key="data.label">
-              <div class="text-4xl font-bold text-gray-900 text-center mb-8">
-                <p
-                  class="inline-block px-3 py-px mb-4 text-xs font-semibold tracking-wider text-teal-900 uppercase rounded-full bg-teal-accent-400"
+        <ul
+          class="steps steps-vertical xs:overflow-hidden sm:overflow-auto sm:steps-horizontal md:w-full xs:px-2 md:px-10 lg:px-0 sm:mt-10"
+        >
+          <li
+            v-for="step in $props.steps"
+            :key="step.index"
+            :class="
+              'step ' +
+              (currentStepIndex === step.index
+                ? 'step-success'
+                : isStepCompleted(step.index)
+                ? 'step-success'
+                : '')
+            "
+          >
+            <span
+              :class="
+                currentStepIndex === step.index
+                  ? 'px-3  py-px text-xs sm:text-[0.7rem] md:text-xs xs:text-[0.6rem] font-semibold tracking-wider text-white uppercase rounded-full bg-teal-accent-400'
+                  : 'px-3 py-px text-xs sm:text-[0.7rem] md:text-xs xs:text-[0.6rem] font-semibold tracking-wider text-white mt-2 text-teal-900 uppercase rounded-full'
+              "
+              >{{ step.questions[0].step }}</span
+            >
+          </li>
+        </ul>
+      </div>
+
+      <div
+        class="flex flex-col xs:px-2 items-center justify-center xs:col-start-5 xs:col-span-6 sm:col-span-10"
+      >
+        <div class="card lg:p-[25px] w-full max-w-4xl bg-transparent">
+          <div class="card-body">
+            <form class="space-y-3">
+              <div v-for="data in currentStep.questions" :key="data.label">
+                <div class="font-bold text-gray-900 text-center mb-8">
+                  <p v-html="data.label"></p>
+                </div>
+                <!-- RADIO -->
+                <div
+                  v-if="data.type === 'radio'"
+                  class="justify-center text-center space-y-2 xs:text-sm sm:text-2xl md:text-3xl lg:text-4xl text-4xl"
                 >
-                  {{ data.step }}
-                </p>
-                <p v-html="data.label"></p>
-              </div>
-              <!-- RADIO -->
-              <div
-                v-if="data.type === 'radio'"
-                class="justify-center space-y-2"
-              >
-                <div class="flex flex-wrap flex-row justify-center">
-                  <div
-                    v-for="choice in data.choices"
-                    :key="choice.value"
-                    class="basis-auto px-3 py-1"
-                  >
-                    <input
-                      class="sr-only peer"
-                      type="radio"
-                      :value="choice.label"
-                      :id="choice.value"
-                      v-model="formData[currentIndex].checked"
-                    />
-                    <label
-                      :for="choice.value"
-                      class="flex uppercase duration-300 font-semibold transform text-white text-4xl hover:text-teal-accent-400 font-black cursor-pointer peer-checked:text-teal-accent-400"
+                  <div class="flex flex-wrap flex-row justify-center">
+                    <div
+                      v-for="choice in data.choices"
+                      :key="choice.value"
+                      class="basis-auto px-3 py-1"
                     >
-                      {{ choice.label }}
-                    </label>
+                      <input
+                        class="sr-only peer"
+                        type="radio"
+                        :value="choice.label"
+                        :id="choice.value"
+                        v-model="formData[currentStepIndex].checked"
+                      />
+                      <label
+                        :for="choice.value"
+                        class="flex uppercase duration-300 font-semibold transform text-white hover:text-teal-accent-400 font-black cursor-pointer peer-checked:text-teal-accent-400 :disabled-opacity-50"
+                      >
+                        {{ choice.label }}
+                      </label>
+                    </div>
+                  </div>
+                </div>
+                <!-- CHECKBOX -->
+                <div
+                  v-else-if="data.type === 'checkbox'"
+                  class="justify-center space-y-2 xs:text-sm sm:text-2xl md:text-3xl lg:text-4xl text-4xl text-center"
+                >
+                  <div class="flex flex-wrap flex-row justify-center">
+                    <div
+                      v-for="choice in data.choices"
+                      :key="data.label + choice.value"
+                      class="basis-auto px-3"
+                    >
+                      <input
+                        class="sr-only peer"
+                        type="checkbox"
+                        :value="choice.label"
+                        :id="choice.value"
+                        v-model="formData[currentStepIndex].checked"
+                      />
+                      <label
+                        :for="choice.value"
+                        class="flex uppercase duration-300 font-semibold transform text-white hover:text-teal-accent-400 font-black cursor-pointer peer-checked:text-teal-accent-400 :disabled-opacity-50"
+                      >
+                        {{ choice.label }}
+                      </label>
+                    </div>
                   </div>
                 </div>
               </div>
-              <!-- CHECKBOX -->
-              <div
-                v-else-if="data.type === 'checkbox'"
-                class="justify-center space-y-2"
+            </form>
+            <!-- previous and next button -->
+            <div
+              class="flex flex-row items-center justify-center xs:mt-5 sm:mt-10 mb-20 text-lg"
+            >
+              <button
+                id="previous"
+                class="inline-flex items-center justify-center xs:w-20 xs:text-sm sm md sm:w-44 sm:h-12 xs:h-10 px-6 font-medium tracking-wide text-gray-900 bg-white ring-inset ring-2 ring-gray-900 enabled:hover:ring-0 enabled:hover:bg-gray-900 enabled:hover:text-white transition duration-200 rounded shadow-md focus:shadow-outline focus:outline-none disabled:opacity-50"
+                :disabled="currentStepIndex == 0"
+                v-on:click="previousStep"
               >
-                <div class="flex flex-wrap flex-row justify-center">
-                  <div
-                    v-for="choice in data.choices"
-                    :key="data.label + choice.value"
-                    class="basis-auto px-3"
-                  >
-                    <input
-                      class="sr-only peer"
-                      type="checkbox"
-                      :value="choice.label"
-                      :id="choice.value"
-                      v-model="formData[currentIndex].checked"
-                    />
-                    <label
-                      :for="choice.value"
-                      class="flex uppercase duration-300 font-semibold transform text-white text-4xl hover:text-teal-accent-400 font-black cursor-pointer peer-checked:text-teal-accent-400"
-                    >
-                      {{ choice.label }}
-                    </label>
-                  </div>
-                </div>
-              </div>
+                {{ previous }}
+              </button>
+
+              <button
+                id="next"
+                class="inline-flex items-center justify-center xs:w-20 xs:h-10 xs:text-sm sm md sm:w-44 sm:h-12 px-6 font-medium tracking-wide text-white transition duration-200 rounded shadow-md bg-teal-accent-400 enabled:hover:bg-teal-accent-600 focus:shadow-outline focus:outline-none ml-4 disabled:opacity-50"
+                v-on:click="nextStep()"
+              >
+                {{ next }}
+              </button>
             </div>
-          </form>
+          </div>
         </div>
       </div>
     </div>
-
-    <!-- previous and next button -->
-    <div class="flex flex-row items-center justify-center mt-10">
-      <button
-        id="previous"
-        class="inline-flex items-center justify-center w-full h-12 px-6 font-medium tracking-wide text-gray-900 bg-white ring-inset ring-2 ring-gray-900 enabled:hover:ring-0 enabled:hover:bg-gray-900 enabled:hover:text-white transition duration-200 rounded shadow-md md:w-auto focus:shadow-outline focus:outline-none disabled:opacity-50"
-        :disabled="currentStepIndex == 1"
-        v-on:click="previousStep"
-      >
-        {{ previous }}
-      </button>
-
-      <button
-        id="next"
-        class="inline-flex items-center justify-center w-full h-12 px-6 font-medium tracking-wide text-white transition duration-200 rounded shadow-md md:w-auto bg-teal-accent-400 enabled:hover:bg-teal-accent-600 focus:shadow-outline focus:outline-none ml-4 disabled:opacity-50"
-        v-on:click="nextStep()"
-      >
-        {{ next }}
-      </button>
-    </div>
   </div>
 </template>
-<script>
-import { useCheckedStore } from "../stores/checked";
 
+<script>
+import { useCheckedStore, useDataStore } from "../stores/checked";
 import MessageError from "./MessageError.vue";
+import CustomLoader from "./CustomLoader.vue";
+
+import axios from "axios";
 export default {
   name: "MultiStepForm",
   components: {
     MessageError,
+    CustomLoader,
   },
   data() {
     return {
@@ -125,25 +158,32 @@ export default {
         },
         {
           step: 3,
-          checked: [],
+          checked: "",
         },
         {
           step: 4,
-          checked: [],
+          checked: "",
         },
         {
           step: 5,
+          checked: [],
+        },
+        {
+          step: 6,
           checked: "",
         },
       ],
       errors: [],
-      currentIndex: 0,
+      isError: null,
       currentStep: this.steps[0],
-      currentStepIndex: this.steps.findIndex((step) => step.active) + 1,
+      currentStepIndex: this.steps.findIndex((step) => step.active),
       previous: "Previous",
       next: "Next",
       store: useCheckedStore(),
+      dataStore: useDataStore(),
       maxChecked: 3,
+      devices: [],
+      loading: false,
     };
   },
   props: {
@@ -159,53 +199,118 @@ export default {
       ],
     },
   },
+  emits: ["devices"],
   computed: {
     checkboxMaxChecked() {
-      return this.formData[this.currentIndex].checked.length <= this.maxChecked;
+      return (
+        this.formData[this.currentStepIndex].checked.length <= this.maxChecked
+      );
     },
   },
   methods: {
     progressValue(index) {
       return (100 / this.steps.length) * index;
     },
+    isStepCompleted(index) {
+      return this.formData[index].checked.length > 0;
+    },
+    async submit() {
+      let url = "/wphone/submit";
+      let user = localStorage.getItem("username");
+      let values = this.store.getAllValues;
+      values.shift();
+
+      let dailyUsage = values[0].checked[0];
+      let mainUsage = values[1].checked[0];
+      let storageSpace = values[2].checked[0];
+      let displaySize = values[3].checked[0];
+      let importantFeatures = values[4].checked[0];
+      let budgetRange = values[5].checked[0];
+      let data = {
+        user: user ? user : "guest",
+        dailyUsage: dailyUsage,
+        mainUsage: mainUsage,
+        storageSpace: storageSpace,
+        displaySize: displaySize,
+        importantFeatures: importantFeatures,
+        budgetRange: budgetRange,
+      };
+
+      console.log("data", data);
+
+      let config = {
+        withCredentials: false,
+        headers: {
+          "Content-Type": "application/json",
+        },
+      };
+      await axios.post(url, data, config).then((response) => {
+        if (response.status === 200) {
+          this.devices = response.data;
+
+          if (this.devices.length === 0) {
+            this.errors = ["No devices found. Please try again."];
+            this.isError = true;
+          } else {
+            this.errors = [
+              `Found ${this.devices.length} devices. Hope you like it.`,
+            ];
+            this.isError = false;
+          }
+          this.$emit("devices", this.devices);
+          this.dataStore.setData(true);
+          this.loading = false;
+        } else {
+          this.errors = ["Something went wrong. Please try again."];
+          this.isError = true;
+        }
+      });
+    },
     nextStep() {
-      if (this.formData[this.currentIndex].checked.length === 0) {
+      if (this.formData[this.currentStepIndex].checked.length === 0) {
         this.errors = ["Please select at least one option"];
         console.log(this.errors);
+        this.isError = true;
       } else if (this.next === "Submit") {
         this.store.setCheckedByStep(
-          this.formData[this.currentIndex].step,
-          this.formData[this.currentIndex].checked
+          this.formData[this.currentStepIndex].step,
+          this.formData[this.currentStepIndex].checked
         );
         console.log("submit");
         if (this.compareData(this.formData, this.store.getAllValues)) {
-          this.store.submit();
+          this.submit();
+          this.loading = true;
         } else {
           this.errors = ["Something went wrong. Please try again."];
+          this.isError = true;
         }
         this.previous = "Search again";
         document.getElementById("next").disabled = true;
+        // disable checkbox and radio
+        document.querySelectorAll("input").forEach((input) => {
+          input.disabled = true;
+        });
       } else {
         this.store.setCheckedByStep(
-          this.formData[this.currentIndex].step,
-          this.formData[this.currentIndex].checked
+          this.formData[this.currentStepIndex].step,
+          this.formData[this.currentStepIndex].checked
         );
+        // this.currentStepIndex++;
         this.currentStepIndex++;
-        this.currentIndex++;
-        this.currentStep = this.steps[this.currentStepIndex - 1];
+        this.currentStep = this.steps[this.currentStepIndex];
+        console.log("currentStepIndex", this.currentStepIndex);
+        console.log("currentStepIndex", this.currentStepIndex);
+        console.log("currentStep", this.currentStep);
         this.closeMessageError();
       }
     },
     previousStep() {
       if (
         this.previous === "Search again" &&
-        this.currentStepIndex === this.steps.length
+        this.currentStepIndex === this.steps.length - 1
       ) {
         this.store.clearStore();
-        this.currentStepIndex = 1;
-        this.currentStep = this.steps[this.currentStepIndex - 1];
-        this.currentIndex = 0;
-        // reset formData
+        this.devices = [];
         this.formData = [
           {
             step: 1,
@@ -217,21 +322,29 @@ export default {
           },
           {
             step: 3,
-            checked: [],
+            checked: "",
           },
           {
             step: 4,
-            checked: [],
+            checked: "",
           },
           {
             step: 5,
+            checked: [],
+          },
+          {
+            step: 6,
             checked: "",
           },
         ];
-      } else if (this.currentStepIndex > 1) {
+        this.currentStepIndex = 0;
+        this.currentStep = this.steps[this.currentStepIndex];
+        // reset formData
+
+        this.dataStore.setData(false);
+      } else if (this.currentStepIndex > 0) {
         this.currentStepIndex--;
-        this.currentStep = this.steps[this.currentStepIndex - 1];
-        this.currentIndex--;
+        this.currentStep = this.steps[this.currentStepIndex];
       }
     },
     compareData(local, store) {
@@ -270,7 +383,6 @@ export default {
 
       return compare;
     },
-
     closeMessageError() {
       this.errors = [];
     },
@@ -280,10 +392,10 @@ export default {
       this.steps.forEach((step) => (step.active = false));
       this.currentStep.active = true;
 
-      if (this.currentStepIndex === this.steps.length) {
+      if (this.currentStepIndex === this.steps.length - 1) {
         this.next = "Submit";
         this.previous = "Previous";
-      } else if (this.currentStepIndex === 1) {
+      } else if (this.currentStepIndex === 0) {
         document.getElementById("next").disabled = false;
 
         this.previous = "Previous";
@@ -295,17 +407,50 @@ export default {
     },
     checkboxMaxChecked() {
       if (this.currentStep.questions[0].type === "checkbox") {
-        if (this.formData[this.currentIndex].checked.length > this.maxChecked) {
+        if (
+          this.formData[this.currentStepIndex].checked.length > this.maxChecked
+        ) {
           this.errors = [`Please select at most ${this.maxChecked} options`];
+          this.isError = true;
           console.log(this.errors);
           // remove first element of array
-          this.formData[this.currentIndex].checked.shift();
-          console.log(this.formData[this.currentIndex].checked);
+          this.formData[this.currentStepIndex].checked.shift();
+          console.log(this.formData[this.currentStepIndex].checked);
         } else {
           this.errors = [];
         }
       }
     },
+  },
+  mounted() {
+    this.formData = [
+      {
+        step: 1,
+        checked: "",
+      },
+      {
+        step: 2,
+        checked: [],
+      },
+      {
+        step: 3,
+        checked: "",
+      },
+      {
+        step: 4,
+        checked: "",
+      },
+      {
+        step: 5,
+        checked: [],
+      },
+      {
+        step: 6,
+        checked: "",
+      },
+    ];
+    this.currentStepIndex = 0;
+    this.currentStep = this.steps[this.currentStepIndex];
   },
 };
 </script>
@@ -325,11 +470,4 @@ label:hover {
 input:checked + label {
   -webkit-text-stroke-width: 0px;
 }
-/* 
-button:disabled,
-button:disabled:hover {
-  background-color: gray;
-  color: #fff;
-  border: 1px solid #1de9b6;
-} */
 </style>
