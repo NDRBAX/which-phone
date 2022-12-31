@@ -1,34 +1,38 @@
-<template>
+<template v-if="Array.keys(errors).length > 0">
   <div
-    class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative mt-5"
-    role="alert"
-    v-if="Object.keys(errors).length > 0"
+    v-for="(values, name) in errors"
+    :key="name"
+    :class="[
+      $props.type
+        ? 'alert-error alert shadow-lg text-white'
+        : 'alert alert-success shadow-lg text-white',
+    ]"
   >
-    <div v-for="(values, name) in errors" :key="name">
-      <!-- <strong class="font-bold">Error: {{ name }}!</strong> -->
-      <span v-if="Array.isArray(values)">
-        <span v-for="value in values" :key="value" class="block sm:inline"
-          ><li>{{ value }}</li></span
-        >
-      </span>
-      <span v-else>
-        <span class="block sm:inline">{{ values }}</span>
-      </span>
-
-      <span class="absolute top-0 bottom-0 right-0 px-4 py-3">
+    <div class="flex justify-between w-full">
+      <div>
+        <span v-if="Array.isArray(values)">
+          <span v-for="value in values" :key="value">{{ value }}</span>
+        </span>
+        <span v-else>
+          <span class="block sm:inline">{{ values }}</span>
+        </span>
+      </div>
+      <div>
         <svg
-          v-on:click="$emit('close')"
-          class="fill-current h-6 w-6 text-red-500"
-          role="button"
+          v-on:click="close"
           xmlns="http://www.w3.org/2000/svg"
-          viewBox="0 0 20 20"
+          class="stroke-current h-6 w-6 hover:-translate-y-0.5 transform transition ease-in-out duration-300 cursor-pointer"
+          fill="none"
+          viewBox="0 0 24 24"
         >
-          <title>Close</title>
           <path
-            d="M14.348 14.849a1.2 1.2 0 0 1-1.697 0L10 11.819l-2.651 3.029a1.2 1.2 0 1 1-1.697-1.697l2.758-3.15-2.759-3.152a1.2 1.2 0 1 1 1.697-1.697L10 8.183l2.651-3.031a1.2 1.2 0 1 1 1.697 1.697l-2.758 3.152 2.758 3.15a1.2 1.2 0 0 1 0 1.698z"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"
           />
         </svg>
-      </span>
+      </div>
     </div>
   </div>
 </template>
@@ -37,7 +41,16 @@
 export default {
   name: "MessageError",
   props: {
-    errors: {},
+    errors: {
+      type: Array,
+      default: () => [],
+    },
+    close: Function,
+
+    type: {
+      type: Boolean,
+    },
   },
+  emits: ["close"],
 };
 </script>
