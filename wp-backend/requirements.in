@@ -5,3 +5,10 @@ djangorestframework==3.14.0
 djoser
 pytz==2022.6
 sqlparse==0.4.3
+djangorestframework_simplejwt
+social-auth-app-django
+drf-yasg
+jwt==1.3.1
+PyJWT==2.6.0
+
+
