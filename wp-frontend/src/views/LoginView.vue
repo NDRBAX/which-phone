@@ -19,11 +19,15 @@
           {{ " " }}
           <RouterLink
             to="/register"
-            class="font-medium text-green-600 hover:text-green-500"
+            class="font-medium text-teal-accent-400 hover:text-teal-accent-600"
             >create an account to unclock all features</RouterLink
           >
         </p>
-        <MessageError :errors="errors" @close="closeMessageError" />
+        <MessageError
+          :errors="errors"
+          :close="closeMessageError"
+          :type="isError"
+        />
       </div>
       <form class="mt-8 space-y-6" v-on:submit.prevent="submitForm">
         <input type="hidden" name="remember" value="true" />
@@ -36,7 +40,7 @@
               type="email"
               autocomplete="email"
               required=""
-              class="relative block w-full appearance-none rounded-none rounded-t-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-green-500 focus:outline-none focus:ring-green-500 sm:text-sm"
+              class="relative block w-full appearance-none rounded-none rounded-t-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-teal-accent-400 focus:outline-none focus:ring-teal-accent-400 sm:text-sm"
               placeholder="Email address"
               v-model="email"
             />
@@ -49,23 +53,28 @@
               type="password"
               autocomplete="current-password"
               required=""
-              class="relative block w-full appearance-none rounded-none rounded-b-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-green-500 focus:outline-none focus:ring-green-500 sm:text-sm"
+              class="relative block w-full appearance-none rounded-none rounded-b-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-teal-accent-400 focus:outline-none focus:ring-teal-accent-400 sm:text-sm"
               placeholder="Password"
               v-model="password"
             />
           </div>
         </div>
+        <!-- 
+        <div class="text-sm text-center">
+          <a
+            href="#"
+            class="font-medium text-teal-accent-400 hover:text-teal-accent-700"
+            >Forgot your password?</a
+          >
+        </div> -->
 
         <div>
           <button
             type="submit"
-            class="group relative flex w-full justify-center rounded-md border border-transparent bg-green-600 py-2 px-4 text-sm font-medium text-white hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2"
+            class="group relative flex w-full justify-center rounded-md border border-transparent bg-teal-accent-400 py-2 px-4 text-sm font-medium text-white hover:bg-teal-accent-600 focus:outline-none focus:ring-2 focus:ring-teal-accent-400 focus:ring-offset-2"
           >
             <span class="absolute inset-y-0 left-0 flex items-center pl-3">
-              <LockClosedIcon
-                class="h-5 w-5 text-green-500 group-hover:text-green-400"
-                aria-hidden="true"
-              />
+              <LockClosedIcon class="h-5 w-5 text-white" aria-hidden="true" />
             </span>
             Sign in
           </button>
@@ -78,6 +87,7 @@
 <script>
 import { LockClosedIcon } from "@heroicons/vue/20/solid";
 import { useAuthStore } from "../stores/auth";
+import { useWishlistStore } from "../stores/checked";
 import MessageError from "../components/MessageError.vue";
 import axios from "axios";
 
@@ -91,7 +101,9 @@ export default {
     return {
       email: "",
       password: "",
-      errors: {},
+      errors: [],
+      wishlist: useWishlistStore(),
+      isError: null,
     };
   },
   methods: {
@@ -116,17 +128,26 @@ export default {
 
           axios.get("/auth/users/me/").then((response) => {
             const user = response.data.username;
-            console.log(user);
+            const avatar = response.data.avatar_url;
+            const email = response.data.email;
+            const history = response.data.history;
+
+            console.log(user, avatar, email, history.length);
             authStore.setUser(user);
+            authStore.setAvatar(avatar);
+            authStore.setEmail(email);
+            authStore.setHistoryCount(history.length);
+            this.wishlist.initializeWishlist();
           });
           this.$router.push("/");
         })
         .catch((error) => {
           this.errors = error.response.data;
+          this.isError = true;
         });
     },
     closeMessageError() {
-      this.errors = {};
+      this.errors = [];
     },
   },
 };
