@@ -6,16 +6,19 @@ from django.contrib.auth.models import (
 )
 
 class CustomUserManager(BaseUserManager):
-    def create_user(self, email, username, password=None, **extra_fields):
+    def create_user(self, email, username,password=None, **extra_fields):
         if not email:
             raise ValueError("User must have an email")
         email = self.normalize_email(email)
-        user = self.model(email=email, username=username, **extra_fields)
+        user = self.model(
+            email=email,
+            username=username,**extra_fields)
         user.set_password(password)
+
         user.save(using=self._db)
         return user
 
-    def create_superuser(self, username, email, password=None, **extra_fields):
+    def create_superuser(self, username, email,password=None, **extra_fields):
         user = self.create_user(username=username, email=email, password=password, **extra_fields)
         user.is_active = True
         user.is_staff = True
@@ -26,6 +29,11 @@ class CustomUserManager(BaseUserManager):
 class CustomUser(AbstractBaseUser, PermissionsMixin):
     email = models.EmailField(max_length=255, unique=True)
     username = models.CharField(max_length=255, unique=True)
+    avatar_url = models.URLField(blank=True, null=True, default="https://cdn-icons-png.flaticon.com/512/3177/3177440.png")
+    wishlist = models.ManyToManyField('Device', related_name='wishlist_users', blank=True)
+    secure_question = models.CharField(max_length=255, blank=True, null=True)
+    secure_answer = models.CharField(max_length=255 , blank=True, null=True)
+    history = models.ManyToManyField('Specification', related_name='history_users', blank=True)
     is_active = models.BooleanField(default=True)
     is_staff = models.BooleanField(default=False)
     is_admin = models.BooleanField(default=False)
@@ -50,16 +58,27 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
     def __str__(self):
         return self.email
 
-class Wishlist(models.Model):
-    user = models.ForeignKey(CustomUser, on_delete=models.CASCADE, related_name='user_wishlist')
-    name = models.CharField(max_length=64)
-    price = models.DecimalField(max_digits=8, decimal_places=2)
-    link = models.CharField(max_length=500)
-    image = models.CharField(max_length=500)
 
-class Values(models.Model):
-    user = models.ForeignKey(CustomUser, on_delete=models.CASCADE, related_name='checked_values')
-    checked = models.JSONField(encoder=None)
+
+class Specification(models.Model):
+    battery = models.CharField(max_length=64)
+    ram = models.CharField(max_length=64)
+    storage = models.CharField(max_length=64)
+    chipset = models.CharField(max_length=64)
+    screen_size = models.CharField(max_length=64)
+    screen_resolution = models.CharField(max_length=64)
+    rear_camera = models.CharField(max_length=64)
+    rear_camera_video = models.CharField(max_length=64)
+    front_camera = models.CharField(max_length=64)
+    front_camera_video = models.CharField(max_length=64)
+    network = models.CharField(max_length=64)
+    removal_storage = models.BooleanField(default=False)
+    price_range_min = models.CharField(max_length=64)
+    price_range_max = models.CharField(max_length=64)
+    dual_sim = models.BooleanField(default=False)
+    charging =  models.BooleanField(default=False)
+    audio_jack = models.BooleanField(default=False)
+
 
 class Brand(models.Model):
     id = models.CharField(max_length=64, primary_key=True)
@@ -74,6 +93,7 @@ class Device(models.Model):
     url = models.CharField(max_length=500)
     thumbnail = models.CharField(max_length=500)
     summary = models.CharField(max_length=500)
+    
 
 class Device_specification(models.Model):
     device_id = models.ForeignKey(Device, on_delete=models.CASCADE, related_name='device_device_specification')
@@ -84,3 +104,12 @@ class Device_specification(models.Model):
 
 
 
+# newsletter
+class NewsletterEmails(models.Model):
+    email = models.EmailField(max_length=255, unique=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+    send_at = models.DateTimeField(blank=True, null=True)
+    sent = models.BooleanField(default=False)
+
+    def __str__(self):
+        return self.email
