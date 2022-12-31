@@ -231,6 +231,9 @@ $ cd which-phone/wp-frontend
 
 # Install npm modules
 $ npm install
+
+# Run frontend server 
+$ npm run dev
 ```
 
 </br>
